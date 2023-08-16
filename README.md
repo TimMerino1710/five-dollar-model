@@ -9,3 +9,7 @@ Read the full paper at https://arxiv.org/abs/2308.04052 .
 ![image](https://github.com/TimMerino1710/five-dollar-model/assets/83784750/ce4358ef-88b9-455f-8e3f-8e03825b7b8d)
 
 Soon to be published in AIIDE-2023.
+
+For any questions about the paper, code, or datasets you can contact us at:
+Tim - tm3477 [at] nyu.edu
+Roman - rvn9303 [at] nyu.edu
