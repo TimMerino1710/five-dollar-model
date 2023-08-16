@@ -100,7 +100,7 @@ def load_data(path, scaling_factor=6):
                        num_workers= 8 if device == 'cuda' else 1,
                        pin_memory=(device=="cuda")) # Makes transfer from the CPU to GPU faster
 
-	test_set = DataLoader(imageDataSet(test_dataset),
+    test_set = DataLoader(imageDataSet(test_dataset),
                       batch_size=BATCH_SIZE,
                       shuffle=True,
                       num_workers= 8 if device == 'cuda' else 1,
