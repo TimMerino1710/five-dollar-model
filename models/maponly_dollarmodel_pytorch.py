@@ -10,7 +10,7 @@ from torch.utils.data import DataLoader
 seed = 7499629
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-display(f"**--Using {device}--**")
+print(f"**--Using {device}--**")
 
 class imageDataSet(Dataset):
 
