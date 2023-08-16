@@ -83,11 +83,11 @@ class DollarModel():
         self.num_res_blocks = num_res_blocks
         self.condition_type = condition_type
 
-        self.model_path = 'dollarmodel/' + self.model_name + "/models/"
+        self.model_path = 'dollarmodel_out/' + self.model_name + "/models/"
         os.makedirs(self.model_path, exist_ok=True)
-        self.sample_path = 'dollarmodel/' + self.model_name + "/samples/"
+        self.sample_path = 'dollarmodel_out/' + self.model_name + "/samples/"
         os.makedirs(self.sample_path, exist_ok=True)
-        self.tiles = self.extract_tiles('../map_tileset/pokemon_tileset.png')
+        self.tiles = self.extract_tiles('map_tileset\pokemon_tileset.png')
 
         self.img_x = img_shape[0]
         self.img_y = img_shape[1]
@@ -97,7 +97,6 @@ class DollarModel():
         self.lr = lr
 
         self.load_data(scaling_factor=6)
-        self.load_unseen(scaling_factor=6)
 
 
         if dataset_type == 'map':
@@ -350,7 +349,7 @@ def train(model, epochs, batch_size, sample_interval=50):
     for i in range(epochs // sample_interval):
         for i in range(sample_interval):
             noise = np.random.normal(0, 1, (len(model.embeddings), model.z_dim))
-            hist = model.generator.fit(x=[noise, model.word_embeddings], y=model.images, validation_split=0.2, batch_size=batch_size, initial_epoch=ep + i, epochs=ep + i + 1, shuffle=True, verbose=2)
+            hist = model.generator.fit(x=[noise, model.embeddings], y=model.images, validation_split=0.2, batch_size=batch_size, initial_epoch=ep + i, epochs=ep + i + 1, shuffle=True, verbose=2)
             loss = loss + hist.history['loss']
             acc = acc + hist.history['accuracy']
             val_loss = val_loss + hist.history['val_loss']
@@ -366,7 +365,7 @@ def train(model, epochs, batch_size, sample_interval=50):
         for i in range (remaining):
             noise = np.random.normal(0, 1, (len(model.embeddings), model.z_dim))
             # noise = model.z_vectors
-            hist = model.generator.fit(x=[noise, model.word_embeddings], y=model.images, validation_split=0.2, batch_size=batch_size, initial_epoch=ep + i, epochs=ep + i + 1, shuffle=True, verbose=2)
+            hist = model.generator.fit(x=[noise, model.embeddings], y=model.images, validation_split=0.2, batch_size=batch_size, initial_epoch=ep + i, epochs=ep + i + 1, shuffle=True, verbose=2)
             loss = loss + hist.history['loss']
             acc = acc + hist.history['accuracy']
             val_loss = val_loss + hist.history['val_loss']
@@ -408,7 +407,7 @@ def train(model, epochs, batch_size, sample_interval=50):
 input_shape = (10, 10, 16)
 epochs = 100
 batch_size = 256
-encpic = DollarModel(model_name="test_modelname", img_shape=input_shape, lr=0.0005, embedding_dim=384, z_dim=5, filter_count=128, kern_size=5, num_res_blocks=3, dataset_type='map', data_path='map_dataset.npy')
+encpic = DollarModel(model_name="test_modelname", img_shape=input_shape, lr=0.0005, embedding_dim=384, z_dim=5, filter_count=128, kern_size=5, num_res_blocks=3, dataset_type='map', data_path='datasets/maps_noaug.npy')
 train(encpic, epochs, batch_size, sample_interval=10)
 
 

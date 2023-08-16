@@ -175,7 +175,7 @@ def extract_tiles(image_file, tile_size=8, num_tiles=16):
             tiles.append(tile)
     return tiles
 
-TILES = extract_tiles('../map_tileset/pokemon_tileset.png')
+TILES = extract_tiles('map_tileset/pokemon_tileset.png')
 
 # Use tiles to construct image of map
 def map_to_image(oh_map, tiles=TILES, tile_size=8):
@@ -538,7 +538,7 @@ if LOAD == False:
             'embeddings': sent_embeddings,
             'word_embeddings': word_embeddings,
         }
-    np.save('H:/RLHF datasets/Map Data/maps_noaug.npy', data, allow_pickle=True)
+    np.save('datasets/Map Data/maps_noaug.npy', data, allow_pickle=True)
 
 
     # do gpt alt label augmentation
@@ -551,7 +551,7 @@ if LOAD == False:
     embeddings_exp = np.array(embeddings)
 
 
-    export_data(ann_ids_exp, maps_exp, annotations_exp, embeddings_exp, 'H:/RLHF datasets/Map Data/maps_gpt4_aug_genexp.npy')
+    export_data(ann_ids_exp, maps_exp, annotations_exp, embeddings_exp, 'datasets/maps_gpt4_aug.npy')
 
 # Do this if you don't want to rerun all the GPT augmentation, which takes time and money
 else:
@@ -570,7 +570,7 @@ else:
             'embeddings': sent_embeddings,
             'word_embeddings': word_embeddings,
         }
-    np.save('H:/RLHF datasets/Map Data/maps_gpt4_aug_wordemb_maxlen35.npy', data, allow_pickle=True)
+    np.save('datasets/maps_gpt4_aug_wordemb_maxlen35.npy', data, allow_pickle=True)
     
 
 
