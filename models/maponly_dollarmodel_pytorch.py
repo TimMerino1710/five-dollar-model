@@ -47,7 +47,7 @@ class ResBlock(nn.Module):
         return x1 + x
 
 class Gen(nn.Module):
-    def __init__(self, model_name, embedding_dim=384, z_dim=5, kern_size=7, filter_count=128, num_res_blocks=3, cliploss=False, alpha=1.0):
+    def __init__(self, model_name, embedding_dim=384, z_dim=5, kern_size=7, filter_count=128, num_res_blocks=3):
         super().__init__()
 
         self.embedding_dim = embedding_dim
@@ -56,8 +56,6 @@ class Gen(nn.Module):
         self.filter_count = filter_count
         self.kern_size = kern_size
         self.num_res_blocks = num_res_blocks
-        self.cliploss = cliploss
-        self.alpha = alpha
 
         self.lin1 = nn.Linear(self.embedding_dim + self.z_dim, self.filter_count * 4 * 4)
 
@@ -92,7 +90,7 @@ def load_data(path, scaling_factor=6):
     embeddings = embeddings * scaling_factor
 
     images, images_test, labels, labels_test, embeddings, embeddings_test = train_test_split(
-    images, labels, embeddings, test_size=24, random_state=seed + 1)
+    images, labels, embeddings, test_size=24, random_state=seed)
 
     train_dataset = [embeddings, images]
     test_dataset = [embeddings_test, images_test]
