@@ -64,7 +64,7 @@ class Gen(nn.Module):
 
         self.padding = nn.ZeroPad2d(1)
         self.last_conv = nn.Conv2d(in_channels=self.filter_count, out_channels=16, kernel_size=9)
-        self.softmax = nn.Softmax(dim=-1)
+        self.softmax = nn.Softmax(dim=1)
 
 
     def forward(self, embedding, z_dim):
@@ -124,7 +124,7 @@ def train(model, EPOCHS):
 
 		    optimizer.zero_grad()
 		    outputs = model(emb.to(device), torch.rand(len(emb), 5).to(device))
-		    loss = nn.NLLLoss()(torch.log(outputs), ytrue)
+		    loss = nn.NLLLoss()(torch.log(outputs), ytrue.argmax(dim=1).to(device))
 
 		    loss_metric_train[epoch] += loss
 
